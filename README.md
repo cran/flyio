@@ -1,6 +1,8 @@
 # flyio - Make data fly to R <img src="https://i.imgur.com/XtsxAmX.png" align="right" />
 Input and output data from R — download, upload, read and write objects from AWS S3, GoogleCloudStorage or local file system from a single interface.
 
+![](http://www.r-pkg.org/badges/version/flyio) ![](https://cranlogs.r-pkg.org/badges/flyio)
+
 ## Overview
 
 **flyio** provides a common interface to interact with data from cloud storage providers or local storage directly from R. It currently supports AWS S3 and Google Cloud Storage, thanks to the API wrappers provided by cloudyr. **flyio** also supports reading or writing tables, rasters, shapefiles and R objects to the data source from memory.
@@ -14,8 +16,8 @@ Input and output data from R — download, upload, read and write objects from A
   - `file_exists()`: Check if a file exists in the bucket/folder.
   - `export_[file/folder]()`: Upload a file/folder to S3 or GCS from R.
   - `import_file()`: Download a file from S3 or GCS. 
-  - `import_[table/raster/stack/shp/rds/rda]()`: Read a file from the set data source and bucket from a user-defined function.
-  - `export_[table/raster/shp/rds/rda]()`: Write a file to the set data source and bucket from a user-defined function.
+  - `import_[table/raster/stack/shp/rds/rda/st]()`: Read a file from the set data source and bucket from a user-defined function.
+  - `export_[table/raster/shp/rds/rda/st]()`: Write a file to the set data source and bucket from a user-defined function.
   
 For global usage, the datsource, authentication keys and bucket can be set in the environment variables of the machine so that one does not have to input it every time. 
   - For datasource:`CLOUD_STORAGE_NAME`
@@ -25,9 +27,12 @@ For global usage, the datsource, authentication keys and bucket can be set in th
 ## Installation
 
 ``` r
+# Install the stable version from CRAN:
+install.packages("flyio")
+
 # Install the latest dev version from GitHub:
 install.packages("devtools")
-devtools::install_github("socialcopsdev/flyio")
+devtools::install_github("atlanhq/flyio")
 
 # Load the library
 library(flyio)
@@ -45,11 +50,11 @@ flyio_get_datasource()
 
 # Authenticate the default data source and set bucket
 flyio_auth("key.json")
-flyio_set_bucket("socialcops-flyio")
+flyio_set_bucket("atlanhq-flyio")
 
 # Authenticate S3 also
 flyio_auth(c("AWS_ACCESS_KEY_ID", "AWS_SECRET_ACCESS_KEY", "AWS_DEFAULT_REGION", "AWS_SESSION_TOKEN"), data_source = "s3")
-flyio_set_bucket("socialcops-flyio", data_source = "s3")
+flyio_set_bucket("atlanhq-flyio", data_source = "s3")
 
 # Listing the files in GCS
 list_files(path = "test", pattern = "*csv")
@@ -74,5 +79,5 @@ mtcars <- import_table("test/mtcars.csv", FUN = readr::read_csv)
 <br/><br/>
 
 
-<img src="http://i66.tinypic.com/29vjrjk.png" align="centre" />
+
 

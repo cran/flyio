@@ -1,4 +1,4 @@
-#' Write csv, Excel files, txt
+#' Write geojson and geopkgs
 #'
 #' @param x variable name
 #' @param file path of the file to be written to
@@ -7,24 +7,22 @@
 #' @param bucket the name of the bucket, if not set globally
 #' @param dir the directory to store intermediate files
 #' @param delete_file logical. to delete the file to be uploaded
-#' @param show_progress logical. Shows progress of the upload operation.
+#' @param show_progress logical. Shows the progress of the upload operation
 #' @param ... other parameters for the FUN function defined above
 
 #'
 #' @return No output
-#' @export "export_table"
+#' @export "export_st"
 #' @examples
-#' # for data on local
-#' export_table(iris, paste0(tempdir(), "/iris.csv"), FUN = write.csv, data_source = "local")
 #' \dontrun{
 #' # for data on cloud
 #' flyio_set_datasource("gcs")
 #' flyio_set_bucket("your-bucket-name")
-#' export_table(iris, "iris.csv", write.csv, dir = tempdir())
+#' export_table(iris, "iris.geojson", dir = tempdir())
 #' }
 
-export_table <- function(x, file, FUN = data.table::fwrite, data_source = flyio_get_datasource(),
-                          bucket = flyio_get_bucket(data_source), dir = flyio_get_dir(), delete_file = TRUE, show_progress = FALSE, ...){
+export_st <- function(x, file, FUN = sf::write_sf, data_source = flyio_get_datasource(),
+                         bucket = flyio_get_bucket(data_source), dir = flyio_get_dir(), delete_file = TRUE, show_progress = FALSE, ...){
 
   # checking if the file is valid
   #assert_that(tools::file_ext(file) %in% c("csv", "xlsx", "xls", "txt"), msg = "Please input a valid path")

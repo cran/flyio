@@ -4,10 +4,10 @@
 \alias{import_table}
 \title{Read csv, Excel files, txt}
 \usage{
-import_table(file, FUN = read.csv,
+import_table(file, FUN = data.table::fread,
   data_source = flyio_get_datasource(),
   bucket = flyio_get_bucket(data_source), dir = flyio_get_dir(),
-  delete_file = TRUE, ...)
+  delete_file = TRUE, show_progress = FALSE, ...)
 }
 \arguments{
 \item{file}{path of the file to be read}
@@ -22,6 +22,8 @@ import_table(file, FUN = read.csv,
 
 \item{delete_file}{logical. to delete the file downloaded}
 
+\item{show_progress}{logical. Shows progress of the download operation}
+
 \item{...}{other parameters for the FUN function defined above}
 }
 \value{
@@ -33,7 +35,7 @@ Read tabular data from anywhere using a function defined by you
 \examples{
 # for data on local
 filepath = system.file("extdata", "mtcars.csv", package = "flyio")
-data = import_table(filepath, data_source = "local")
+data = import_table(filepath, FUN = read.csv, data_source = "local")
 \dontrun{
 # for data on cloud
 flyio_set_datasource("gcs")
